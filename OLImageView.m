@@ -161,7 +161,11 @@ const NSTimeInterval kMaxTimeStep = 1; // note: To avoid spiral-o-death
     if (!self.animatedImage || [self.animatedImage.images count] == 0) {
         return;
     }
-    layer.contents = (__bridge id)([[self.animatedImage.images objectAtIndex:self.currentFrameIndex] CGImage]);
+    UIImage *currentImage = [self.animatedImage.images objectAtIndex:self.currentFrameIndex];
+    if (currentImage == [NSNull null]) {
+        return;
+    }
+    layer.contents = (__bridge id)([currentImage CGImage]);
 }
 
 - (void)didMoveToWindow
